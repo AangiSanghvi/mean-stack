@@ -1,0 +1,83 @@
+MongoDB Commands
+db.emp.insert([
+    {name:"ram", city:"ahd", salary:10000, age:25},
+    {name:"shyam", city:"surat", salary:20000, age:35},
+    {name:"max", city:"baroda", salary:30000, age:45},
+    {name:"will", city:"ahd", salary:40000, age:55},
+    {name:"sita", city:"surat", salary:25000, age:35},
+    {name:"gita", city:"baroda", salary:32000, age:40},
+    {name:"lucky", city:"ahd", salary:100000, age:47}
+])
+OUTPUT FROM TERMINAL-
+BulkWriteResult({ 
+    "writeErrors" : [ ],
+    "writeConcernErrors" : [ ], //if there are any concern
+    "nInserted" : 7,
+    "nUpserted" : 0,
+    "nMatched" : 0,
+    "nModified" : 0, // changes made
+    "nRemoved" : 0,
+    "upserted" : [ ]    // update and insert
+})
+
+UPDATE 
+SQL- update emp set salary=170000 where name="lucky"
+NOSQL/MONGODB- db.emp.updateOne({name:"lucky"}, {$set : {salary:170000}})
+
+one update, many fields
+db.emp.updateOne({name:"lucky"}, {$set : {salary:170000, age:35}})
+
+UPSERT - if the conditional field value dosent match in the given records then insert the record or else update insert
+db.emp.updateOne({name:"lucky2"}, { $set : {salary:170000, age:35} }, {upsert:true})
+
+DELETE
+db.users.deleteOne({_id:"646dd009529380bf33424ceb"})
+
+OPERATOR
+
+db.emp.find({
+    salary :{$gt:35000}
+})
+
+db.emp.find({
+    salary :{$lt:35000}
+})
+
+db.emp.find({
+    salary :{ $gte:15000 } 
+})
+
+db.emp.find({
+    salary :{ $lte:15000 } 
+})
+
+db.emp.find({
+    salary :{ $eq:15000 } 
+})
+
+db.emp.find({
+    salary :{ $ne:15000 } 
+})
+
+LOGICAL OPERATORS
+and
+db.emp.find({
+    $and:[
+        {salary:{$gt:20000}},
+        {salary:{$lte:80000}}
+    ]
+})
+
+or
+db.emp.find({
+    $or:[
+        {salary:{$gt:20000}},
+        {salary:{$lte:100000}}
+    ]
+})
+
+IN - it is case sensitive but you can write city or "city" i.e. allows double quotes
+db.emp.find({
+    city:{$in :["ahd", "surat"]}
+})
+
