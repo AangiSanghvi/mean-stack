@@ -14,7 +14,9 @@ app.use(express.urlencoded({extended:true}))
 app.use(express.json())
 
 //db connection
-mongoose.connect('mongodb://127.0.0.1:27017/mean23').then(()=> {console.log("dbConnected...")})
+let dbUrl = "mongodb+srv://root:root@cluster0.viqdybs.mongodb.net/?retryWrites=true&w=majority"
+//let dbUrl = ''
+mongoose.connect(dbUrl).then(()=> {console.log("dbConnected...")})
 
 //product routes - mapping
 app.post("/addproduct2", productController.addProduct)
